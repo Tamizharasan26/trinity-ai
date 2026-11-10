@@ -1,1 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRINITY AI | Trading Intelligence</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+ background:#080d18;
+ color:#e8edf8;
+ font-family:Arial,sans-serif;
+ padding-bottom:35px;
+}
+
+header{
+ padding:22px 17px;
+ background:#101a2c;
+ border-bottom:1px solid #263550;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.logo{
+ font-size:23px;
+ font-weight:900;
+ letter-spacing:2px;
+ color:#62d8ff;
+}
+
+.logo span{color:#fff}
+
+.status{
+ font-size:11px;
+ color:#f7c65d;
+ border:1px solid #66542a;
+ padding:7px;
+ border-radius:15px;
+}
+
+.container{padding:16px;max-width:1100px;margin:auto}
+
+h2{font-size:19px;margin:12px 0}
+
+.subtitle{color:#8291aa;font-size:12px;margin-top:6px}
+
+.card{
+ background:#111c30;
+ border:1px solid #253653;
+ border-radius:13px;
+ padding:16px;
+ margin-bottom:15px;
+}
+
+.label{
+ color:#91a2bd;
+ font-size:11px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+ margin-bottom:10px;
+}
+
+select,input{
+ width:100%;
+ padding:13px;
+ background:#091323;
+ border:1px solid #344563;
+ border-radius:8px;
+ color:white;
+ margin:6px 0 13px;
+ font-size:14px;
+}
+
+button{
+ border:0;
+ padding:13px;
+ border-radius:8px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.analyse{
+ width:100%;
+ background:linear-gradient(90deg,#087cf0,#04c7c8);
+ color:white;
+ font-size:15px;
+ margin-top:5px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+
+.agent{
+ min-height:150px;
+}
+
+.bull{border-top:3px solid #00d69a}
+.bear{border-top:3px solid #ff536d}
+.god{border-top:3px solid #b78aff}
+.reality{border-top:3px solid #36c8ff}
+
+.agent h3{font-size:15px;margin-bottom:12px}
+.agent p{font-size:12px;color:#aab8ce;line-height:1.6}
+
+.score{
+ font-size:25px;
+ font-weight:bold;
+ margin:10px 0;
+}
+
+.green{color:#00dfa1}
+.red{color:#ff647b}
+.purple{color:#c19aff}
+
+.verdict{
+ text-align:center;
+ padding:23px 12px;
+ background:linear-gradient(145deg,#182b48,#111c30);
+ border:1px solid #57458c;
+ border-radius:13px;
+}
+
+.verdict h1{
+ font-size:28px;
+ color:#c6a5ff;
+ margin:12px;
+}
+
+.verdict p{font-size:12px;color:#aebbd0;line-height:1.7}
+
+.metric{
+ display:flex;
+ justify-content:space-between;
+ padding:12px 0;
+ border-bottom:1px solid #26344c;
+ font-size:13px;
+}
+
+.metric span:last-child{font-weight:bold}
+
+.log{
+ background:#091323;
+ border-radius:9px;
+ padding:13px;
+ font-size:12px;
+ line-height:1.8;
+ color:#b6c4da;
+ min-height:60px;
+}
+
+footer{
+ text-align:center;
+ color:#65758d;
+ font-size:11px;
+ padding:20px;
+}
+
+@media(min-width:650px){
+ .grid{grid-template-columns:repeat(4,1fr)}
+ .container{padding:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">TRINITY<span> AI</span></div>
+ <div class="status">● DEMO MODE</div>
+</header>
+
+<div class="container">
+
+ <h2>COMMAND CENTER</h2>
+ <p class="subtitle">Multi-Agent Trading Intelligence Platform</p>
+
+ <div class="card" style="margin-top:18px">
+
+  <div class="label">Market Configuration</div>
+
+  <select id="market">
+   <option>NSE - Indian Stock Market</option>
+   <option>BSE - Indian Stock Market</option>
+   <option>NYSE - US Market</option>
+   <option>NASDAQ - US Market</option>
+   <option>FOREX</option>
+   <option>CRYPTOCURRENCY</option>
+  </select>
+
+  <input id="symbol" placeholder="Enter symbol (e.g. NIFTY, RELIANCE, BTCUSDT)" value="NIFTY">
+
+  <select id="style">
+   <option>Scalping</option>
+   <option selected>Intraday Trading</option>
+   <option>Swing Trading</option>
+   <option>Positional Trading</option>
+   <option>Options Trading</option>
+   <option>Long-term Investing</option>
+  </select>
+
+  <select id="timeframe">
+   <option>1 Minute</option>
+   <option>5 Minutes</option>
+   <option selected>15 Minutes</option>
+   <option>30 Minutes</option>
+   <option>1 Hour</option>
+   <option>4 Hours</option>
+   <option>Daily</option>
+   <option>Weekly</option>
+  </select>
+
+  <button class="analyse" onclick="analyse()">⚡ START AI DEBATE</button>
+
+ </div>
+
+ <h2>THE THREE INTELLIGENCES</h2>
+
+ <div class="grid">
+
+  <div class="card agent bull">
+   <h3>🐂 BULL AI</h3>
+   <div class="score green" id="bullScore">--</div>
+   <p id="bullText">Waiting for analysis...</p>
+  </div>
+
+  <div class="card agent bear">
+   <h3>🐻 BEAR AI</h3>
+   <div class="score red" id="bearScore">--</div>
+   <p id="bearText">Waiting for analysis...</p>
+  </div>
+
+  <div class="card agent god">
+   <h3>👑 GOD AI</h3>
+   <div class="score purple" id="godScore">--</div>
+   <p id="godText">Independent judgement pending...</p>
+  </div>
+
+  <div class="card agent reality">
+   <h3>🔬 REALITY AI</h3>
+   <div class="score" style="color:#36c8ff">--</div>
+   <p id="realityText">Awaiting verified market data...</p>
+  </div>
+
+ </div>
+
+ <h2>👑 FINAL JUDGEMENT</h2>
+
+ <div class="verdict">
+  <div class="label">GOD AI DECISION</div>
+  <h1 id="verdict">WAITING</h1>
+  <p id="verdictText">Start an analysis to see the demonstration interface.</p>
+ </div>
+
+ <h2>⚔️ AI DEBATE ROOM</h2>
+
+ <div class="card">
+  <div class="label">Argument Exchange</div>
+  <div class="log" id="debate">
+   Bull and Bear are waiting for market analysis.
+  </div>
+ </div>
+
+ <h2>🛡️ RISK MANAGEMENT</h2>
+
+ <div class="card">
+  <div class="metric">
+   <span>Market</span><span id="riskMarket">--</span>
+  </div>
+  <div class="metric">
+   <span>Trading Style</span><span id="riskStyle">--</span>
+  </div>
+  <div class="metric">
+   <span>Risk Assessment</span><span id="riskLevel">--</span>
+  </div>
+  <div class="metric">
+   <span>Data Verification</span><span>NOT AVAILABLE</span>
+  </div>
+  <div class="metric">
+   <span>Real Trading</span><span>DISABLED</span>
+  </div>
+ </div>
+
+ <h2>📊 SYSTEM STATUS</h2>
+
+ <div class="card">
+  <div class="metric">
+   <span>Frontend</span><span class="green">ONLINE</span>
+  </div>
+  <div class="metric">
+   <span>AI API</span><span style="color:#f7c65d">NOT CONNECTED</span>
+  </div>
+  <div class="metric">
+   <span>Market Data</span><span style="color:#f7c65d">NOT CONNECTED</span>
+  </div>
+  <div class="metric">
+   <span>Database</span><span style="color:#f7c65d">NOT CONNECTED</span>
+  </div>
+ </div>
+
+</div>
+
+<footer>
+ TRINITY AI © 2026<br>
+ Three Minds. One Market. One Verdict.<br><br>
+ Demo interface only. Not financial advice.
+</footer>
+
+<script>
+
+function analyse(){
+
+ const symbol=document.getElementById("symbol").value.trim();
+ const market=document.getElementById("market").value;
+ const style=document.getElementById("style").value;
+ const timeframe=document.getElementById("timeframe").value;
+
+ if(!symbol){
+  alert("Please enter a market symbol.");
+  return;
+ }
+
+ document.getElementById("bullScore").innerText="DEMO";
+ document.getElementById("bearScore").innerText="DEMO";
+ document.getElementById("godScore").innerText="PENDING";
+
+ document.getElementById("bullText").innerText=
+ "Bullish analysis has not yet been connected to live market data.";
+
+ document.getElementById("bearText").innerText=
+ "Bearish analysis has not yet been connected to live market data.";
+
+ document.getElementById("godText").innerText=
+ "Independent AI judgement requires real market evidence.";
+
+ document.getElementById("realityText").innerText=
+ "Cannot verify price, volume, indicators or news without a connected data source.";
+
+ document.getElementById("verdict").innerText="NO DATA";
+
+ document.getElementById("verdictText").innerText=
+ "No trading recommendation. Connect verified market data and AI providers before making a decision.";
+
+ document.getElementById("debate").innerHTML=
+ "<b>MARKET:</b> "+symbol+
+ "<br><b>TYPE:</b> "+style+
+ "<br><b>TIMEFRAME:</b> "+timeframe+
+ "<br><br>🐂 <b>BULL:</b> Evidence unavailable. No bullish conclusion.<br><br>"+
+ "🐻 <b>BEAR:</b> Evidence unavailable. No bearish conclusion.<br><br>"+
+ "👑 <b>GOD:</b> Neither argument can be accepted without verified evidence.<br><br>"+
+ "🔬 <b>REALITY:</b> Live market data and independent AI analysis are not connected.";
+
+ document.getElementById("riskMarket").innerText=symbol;
+ document.getElementById("riskStyle").innerText=style;
+ document.getElementById("riskLevel").innerText="NOT ASSESSED";
+
+}
+
+</script>
+
+</body>
+  </html>
