@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime, timezone
+import yfinance as yf
 
 app = FastAPI(
     title="TRINITY AI",
@@ -88,3 +89,52 @@ def agents():
         ],
         "status": "initialized"
   }
+@app.get("/api/market-data/{symbol}")
+def market_data(symbol: str):
+
+    try:
+        ticker_symbol = symbol.upper()
+
+        if not ticker_symbol.endswith(".NS"):
+            ticker_symbol += ".NS"
+
+        stock = yf.Ticker(ticker_symbol)
+
+        data = stock.history(
+            period="5d",
+            interval="5m"
+        )
+
+        if data.empty:
+            raise HTTPException(
+                status_code=404,
+                detail="Market data unavailable"
+            )
+
+        candles = []
+
+        for timestamp, row in data.tail(20).iterrows():
+            candles.append({
+                "time": timestamp.isoformat(),
+                "open": float(row["Open"]),
+                "high": float(row["High"]),
+                "low": float(row["Low"]),
+                "close": float(row["Close"]),
+                "volume": int(row["Volume"])
+            })
+
+        return {
+            "symbol": ticker_symbol,
+            "status": "success",
+            "source": "Yahoo Finance",
+            "candles": candles
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+                )
