@@ -117,10 +117,10 @@ def market_data(symbol: str):
             candles.append({
                 "time": timestamp.isoformat(),
                 "open": float(row["Open"]),
-                "high": float(row["High"]),
-                "low": float(row["Low"]),
-                "close": float(row["Close"]),
-                "volume": int(row["Volume"])
+"high": float(row["High"]),
+"low": float(row["Low"]),
+"close": float(row["Close"]),
+"volume": int(row["Volume"])
             })
 
         return {
